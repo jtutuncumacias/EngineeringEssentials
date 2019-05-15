@@ -26,6 +26,7 @@ import javax.ws.rs.Produces;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 import java.io.IOException;
+import java.text.ParseException;
 import java.util.Date;
 import java.util.List;
 
@@ -37,10 +38,15 @@ public class StockResource {
     // Your service should return data based on 3 inputs
     // Stock ticker, start date and end date
     @GET
-    @Path("/{stockTicker}/{startDate}/{endDate}")
+    @Path("/{stockTicker}/startDate/{startDate}/endDate/{endDate}")
     @Produces(MediaType.APPLICATION_JSON)
-    public Response getDataForCompany(@PathParam("stockTicker") String stockTicker, @PathParam("startDate") Date startDate, @PathParam ("endDate") Date endDate) throws IOException {
+    public Response getDataForCompany(@PathParam("stockTicker") String stockTicker, @PathParam("startDate") String startDateStr, @PathParam ("endDate") String endDateStr) throws IOException, ParseException {
+        Date startDate = Stock.DATEFORMAT.parse(startDateStr);
+        Date endDate = Stock.DATEFORMAT.parse(endDateStr);
+
         List<Stock> stockList = InputValidator.validateHistoricalStockData();
+
+        System.out.println("stockList received");
 
         for (Stock stock: stockList) {
             if (stock.getName().equalsIgnoreCase(stockTicker)) {

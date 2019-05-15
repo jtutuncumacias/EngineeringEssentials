@@ -16,11 +16,15 @@
 
 package pojo;
 
+import com.fasterxml.jackson.annotation.JsonAnyGetter;
 import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonProperty;
+import com.fasterxml.jackson.annotation.JsonCreator;
 
 import java.util.Date;
+import java.util.List;
 import java.util.Map;
+import java.text.SimpleDateFormat;
 
 /**
  * This class will define a company's end-of-day stock price
@@ -28,13 +32,16 @@ import java.util.Map;
  */
 public class Stock {
 
+    public static final SimpleDateFormat DATEFORMAT = new SimpleDateFormat("MM-dd-yyyy");
+
     // TODO - Think back to your modelling session
     // Define the attributes of a stock price based on the
     // provided data in resources/data
-    @JsonFormat(shape = JsonFormat.Shape.OBJECT, pattern="MM/dd/yyyy", timezone="GMT-5")
-    private String name;
     @JsonProperty
-    private Map<Date,Float> dailyClosePrice;
+    private String name;
+
+    @JsonProperty
+    private List<Map<String,Float>> dailyClosePrice;
 
     // TODO - add getter and setter methods for your attributes
     public String getName() {
@@ -45,13 +52,11 @@ public class Stock {
         this.name = name;
     }
 
-    public Map<Date,Float> getDailyClosePrice() {
+    public List<Map<String,Float>> getDailyClosePrice() {
         return dailyClosePrice;
     }
 
-    public void setDailyClosePrice(Map<Date,Float> dailyClosePrice) {
-        this.dailyClosePrice = dailyClosePrice;
-    }
+    public void setDailyClosePrice(List<Map<String,Float>> dailyClosePrice) { this.dailyClosePrice = dailyClosePrice; }
 
     @Override
     public boolean equals(Object o) {
