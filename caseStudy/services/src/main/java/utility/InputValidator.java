@@ -42,11 +42,20 @@ public class InputValidator {
     }
 
     // TODO - write a method that will validate the inputs to the Company Resource
-    public static List<Company> validateCompanyInfo() throws IOException {
+//    public static List<Company> validateCompanyInfo() throws IOException {
+    public static boolean validateCompanyInfo() throws IOException {
       InputStream inputStream = new FileInputStream(("src/main/resources/data/companyInfo.json"));
+
+      try {
+          mapper.readValue(inputStream, new TypeReference<List<Company>>() {
+          });
+          return true;
+      } catch (IOException e) {
+            return false; }
+        }
       
-      return mapper.readValue(inputStream, new TypeReference<List<Company>>() {
-      });
+//      return mapper.readValue(inputStream, new TypeReference<List<Company>>() {
+//      });
     }
 
     // TODO - write a method that will validate the inputs to the Stock Resource
