@@ -26,6 +26,7 @@ class Charts extends React.Component {
              * Initialize a state object to store a JavaScript object returned from the helper method.
              * It can be initialized to be empty.
              */
+             data: null,
         };
     }
 
@@ -74,6 +75,12 @@ class Charts extends React.Component {
          *
          *  Don't forget to bind the helper method in the constructor!
          * */
+
+         fetch("http://localhost:3000/stock/" + {this.props.} + "/" + {} + "/" + {})
+          .then(response => response.json())
+          .then(data => {
+            this.setState({ data: data });
+          });
 }
     
     render() {
@@ -81,6 +88,11 @@ class Charts extends React.Component {
          * TODO
          * Render your LineChart component and pass the data for the chart to display via props
          */
+         return (
+            <div>
+                <LineChart data={this.state.data} />
+            </div>
+        );
     }
 }
 

@@ -22,6 +22,10 @@ import './style/App.css';
  * Import your components
  */
 
+ import Charts from './components/Charts'
+ import Date from './components/Date'
+ import StockTicker from './components/StockTicker'
+
 
 class App extends React.Component{
     constructor(props) {
@@ -31,6 +35,9 @@ class App extends React.Component{
              * TODO
              * Add state objects for the user inputs and anything else you may need to render the highchart.
              */
+             stockTicker: null,
+             startDate: null,
+             endDate: null
         };
 
     }
@@ -66,7 +73,11 @@ class App extends React.Component{
                    *  to help control rendering and pass these states as props to the component. This conditional can
                    *  be maintained as a state object.
                    *  http://reactpatterns.com/#conditional-rendering
-                   */}
+                   */
+                   ((this.state.stockTicker != null) && (this.state.startDate != null) && (this.state.endDate != null)) ? 
+                   <Chart stockTicker={this.state.stockTicker} startDate={this.state.startDate} endDate={this.state.endDate}/> : null
+                 }
+
 
           </div>
       );

@@ -23,17 +23,16 @@ class LineChart extends React.Component {
     }
 
     componentDidMount() {
-/*        Highcharts.chart('chart', {
-
-            TODO
-            Create a highcharts line chart of your choosing (e.g. https://www.highcharts.com/demo/line-time-series for a demo).
-
+        Highcharts.chart('chart', {
+            /**
+             * TODO
+             * Create a highcharts line chart of your choosing (e.g. https://www.highcharts.com/demo/line-time-series for a demo).
+             */
             series: [{
                 name: 'Prices',
                 data: this.props.data
             }]
         });
-*/
     }
 
     componentWillReceiveProps(props) {
@@ -45,12 +44,15 @@ class LineChart extends React.Component {
          * required by the type of line chart chosen and set it in the series. Use Date.UTC(..)
          * to create the x-axis.
          */
+         seriesData = this.props.data;
+         console.log(seriesData);
         
         /**
          * TODO
          * Uncomment the line below to pass the data be displayed to the series
-         * this.chart.series[0].setData(data);
          */
+        this.chart.series[0].setData(this.props.data);
+        
     }
 
     componentWillUnmount() {
