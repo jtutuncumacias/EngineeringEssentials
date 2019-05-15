@@ -56,15 +56,19 @@ public class InputValidator {
       
 //      return mapper.readValue(inputStream, new TypeReference<List<Company>>() {
 //      });
-    }
 
     // TODO - write a method that will validate the inputs to the Stock Resource
-    public static List<Stock> validateHistoricalStockData() throws IOException {
+//    public static List<Stock> validateHistoricalStockData() throws IOException {
+    public static boolean validateHistoricalStockData() throws IOException {
         InputStream inputStream = new FileInputStream(("src/main/resources/data/historicalStockData.json"));
 
-        return mapper.readValue(inputStream, new TypeReference<List<Stock>>() {
+    try {
+        mapper.readValue(inputStream, new TypeReference<List<Stock>>() {
         });
+        return true;
+    } catch (IOException e) {
+        return false;
 
     }
 
-}
+} }
