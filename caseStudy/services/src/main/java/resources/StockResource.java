@@ -39,7 +39,7 @@ public class StockResource {
     @GET
     @Path("/{stockTicker}/{startDate}/{endDate}")
     @Produces(MediaType.APPLICATION_JSON)
-    public Response getDataForCompany(@PathParam("stockTicker") String stockTicker, @PathParam("startDate") Date startDate, Date endDate) throws IOException {
+    public Response getDataForCompany(@PathParam("stockTicker") String stockTicker, @PathParam("startDate") Date startDate, @PathParam ("endDate") Date endDate) throws IOException {
         List<Stock> stockList = InputValidator.validateHistoricalStockData();
 
         for (Stock stock: stockList) {
