@@ -16,15 +16,45 @@
 
 package utility;
 
+import com.fasterxml.jackson.core.type.TypeReference;
+import com.fasterxml.jackson.databind.ObjectMapper;
+
+import pojo.Company;
+import pojo.Stock;
+
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.IOException;
+import java.io.InputStream;
+import java.util.List;
+
 /**
  * Utility class to validate inputs
  */
 public class InputValidator {
 
+    private static final ObjectMapper mapper = new ObjectMapper();
+
     // TODO - write a method that will validate your JSON input files
+    public static void validateInput() throws IOException {
+        validateCompanyInfo();
+        validateHistoricalStockData();
+    }
 
     // TODO - write a method that will validate the inputs to the Company Resource
+    public static List<Company> validateCompanyInfo() throws IOException {
+      InputStream inputStream = new FileInputStream(("src/main/resources/data/companyInfo.json"));
+
+      return mapper.readValue(inputStream, new TypeReference<List<Company>>() {
+      });
+    }
 
     // TODO - write a method that will validate the inputs to the Stock Resource
+    public static List<Stock> validateHistoricalStockData() throws IOException {
+        InputStream inputStream = new FileInputStream(("src/main/resources/data/historicalStockData.json"));
+
+        return mapper.readValue(inputStream, new TypeReference<List<Stock>>() {
+        });
+    }
 
 }

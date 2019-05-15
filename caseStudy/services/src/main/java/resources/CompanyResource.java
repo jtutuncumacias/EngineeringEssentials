@@ -16,10 +16,38 @@
 
 package resources;
 
+import pojo.Company;
+import utility.InputValidator;
+
+import javax.ws.rs.GET;
+import javax.ws.rs.Path;
+import javax.ws.rs.PathParam;
+import javax.ws.rs.Produces;
+import javax.ws.rs.core.MediaType;
+import javax.ws.rs.core.Response;
+import java.io.IOException;
+import java.util.List;
+
 // TODO - add your @Path here
+@Path("company")
 public class CompanyResource {
 
     // TODO - Add a @GET resource to get company data
     // Your service should return data for a given stock ticker
+
+    @GET
+    @Path("/{companySymbol}")
+    @Produces(MediaType.APPLICATION_JSON)
+    public Response getDataForCompany(@PathParam("companySymbol") String companySymbol) throws IOException {
+        List<Company> companyList = InputValidator.validateCompanyInfo();
+
+        for (Company company: companyList) {
+            if (company.getSymbol().equalsIgnoreCase(companySymbol)) {
+                return Response.ok().entity(company).build();
+            }
+        }
+
+        return Response.ok().entity("No matches found for company with symbol " + companySymbol).build();
+    }
 
 }
