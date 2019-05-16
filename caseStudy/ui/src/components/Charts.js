@@ -41,6 +41,21 @@ class Charts extends React.Component {
         this.dataSourceHelper(nextProps);
     }
 
+    dateToString(today) {
+        var dd = today.getDate();
+        var mm = today.getMonth() + 1; //January is 0!
+
+        var yyyy = today.getFullYear();
+        if (dd < 10) {
+          dd = '0' + dd;
+        } 
+        if (mm < 10) {
+          mm = '0' + mm;
+        } 
+        var output = mm + '-' + dd + '-' + yyyy;
+        return output;
+    }
+
     dataSourceHelper(props) {
         props = props || this.props;
         
@@ -80,9 +95,16 @@ class Charts extends React.Component {
          *
          *  Don't forget to bind the helper method in the constructor!
          * */
-        axios.get("http://localhost:8080/stock/" + this.props.stockTicker + "/startDate/" + this.props.startDate + "/endDate/" + this.props.endDate)
+        const startDate = new Date(this.props.startDate)
+        const endDate = new Date(this.props.endDate)
+
+        const url = "http://localhost:8080/stock/" + this.props.stockTicker + "/startDate/" + this.dateToString(startDate) + "/endDate/" + this.dateToString(endDate);
+        console.log(url)
+
+        axios.get(url)
         .then((response) => {
             // handle success
+            console.log(response.data)
             this.setState({data:response.data})
         })
         .catch( (error) => {
@@ -102,8 +124,6 @@ class Charts extends React.Component {
           });
           */
         }
-
-    shouldComponentUpdate () { return true; }
     
     render() {
         /**

@@ -15,7 +15,6 @@
  */
 
 import React from 'react';
-//import Date from '../Date';
 import Highcharts from 'highcharts';
 import HighchartsReact from 'highcharts-react-official';
 
@@ -82,7 +81,7 @@ class LineChart extends React.Component {
                 data.push({
                     x: Date.parse(key),
                     y: val,
-                    name:"price",
+                    name: key,
                     color: "#8eb4ea"
                 })
             });

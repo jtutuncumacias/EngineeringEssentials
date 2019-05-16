@@ -16,15 +16,14 @@
 
 import React from 'react';
 import './style/App.css';
-
 /**
  * TODO:
  * Import your components
  */
 
  import Charts from './components/Charts';
-// import StockTicker from './components/StockTicker';
-// import LineChart from './components/charts/LineChart';
+ import Date from './components/Date';
+ //import StockTicker from './components/StockTicker';
 
 
 class App extends React.Component{
@@ -36,11 +35,19 @@ class App extends React.Component{
              * Add state objects for the user inputs and anything else you may need to render the highchart.
              */
              stockTicker: 'GOOG',
-             startDate: '2-26-2019',
-             endDate: '3-6-2019'
+             startDate: '1-1-2019',
+             endDate: '6-1-2019'
         };
+        this.handleInput = this.handleInput.bind(this);
 
     }
+
+    handleInput(type,value) {
+      this.setState({
+        [type]:value
+      })
+    };
+
 
     // handleSubmit = (stockTicker, startDate, endDate) => {
     //   const newCard = {author, text: message, tags, dateStamp};
@@ -51,29 +58,27 @@ class App extends React.Component{
     render () {
       return ( 
           <div className="page-display">
-              <div className="input">
-              {/**
-               * TODO
-               * Render the StockTicker and Date components. You can use the date component twice
-               * for both the start and end dates.
-               * Add onChange props to the StockTicker and both Date components.
-               * These props methods should set state and help determine if the
-               * highchart should be displayed by changing the state of that boolean.
-               * Don't forget to bind these methods!
-               */
-
-              ((this.state.stockTicker != null) && (this.state.startDate != null) && (this.state.endDate != null)) ? 
-                <Charts 
-                    stockTicker={this.state.stockTicker}
-                    startDate={this.state.startDate} 
-                    endDate={this.state.endDate}
-                /> : null
-              }
-
-                <div className="date-range">
-
+              <h1>Stock Visualization App</h1>
+              <br/>
+                <div className="input">
+                {/*<StockTicker inputValue={this.stockTicker} onChange={(value) => {this.handleInput("stockTicker",value)}} />)*/}
+                <input type="text" value={this.state.stockTicker} onChange={(value) => {this.handleInput("stockTicker",value)}} />
+                {/**
+                 * TODO
+                 * Render the StockTicker and Date components. You can use the date component twice
+                 * for both the start and end dates.
+                 * Add onChange props to the StockTicker and both Date components.
+                 * These props methods should set state and help determine if the
+                 * highchart should be displayed by changing the state of that boolean.
+                 * Don't forget to bind these methods!
+                 */}
+                   <div className="date-range">
+                      <Date text={"Start Date"} onChange={(value) => {this.handleInput("startDate",value)}} />
+                    </div>
+                    <div className="date-range">
+                      <Date text={"End Date"} onChange={(value) => {this.handleInput("endDate",value)}} />
+                    </div>
                 </div>
-              </div>
 
 
                  {/**
@@ -84,9 +89,15 @@ class App extends React.Component{
                    *  be maintained as a state object.
                    *  http://reactpatterns.com/#conditional-rendering
                    */
-
-
                  }
+
+                 {((this.state.stockTicker != null) && (this.state.startDate != null) && (this.state.endDate != null)) ? 
+                    <Charts 
+                        stockTicker={this.state.stockTicker}
+                        startDate={this.state.startDate} 
+                        endDate={this.state.endDate}
+                    /> : null
+                  }
 
 
           </div>
