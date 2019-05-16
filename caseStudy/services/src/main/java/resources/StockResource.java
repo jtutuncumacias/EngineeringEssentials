@@ -41,15 +41,11 @@ public class StockResource {
     @Path("/{stockTicker}/startDate/{startDate}/endDate/{endDate}")
     @Produces(MediaType.APPLICATION_JSON)
     public Response getDataForCompany(@PathParam("stockTicker") String stockTicker, @PathParam("startDate") String startDateStr, @PathParam ("endDate") String endDateStr) throws IOException, ParseException {
-        Date startDate = Stock.DATEFORMAT.parse(startDateStr);
-        Date endDate = Stock.DATEFORMAT.parse(endDateStr);
-
         List<Stock> stockList = InputValidator.validateHistoricalStockData();
-
-        System.out.println("stockList received");
 
         for (Stock stock: stockList) {
             if (stock.getName().equalsIgnoreCase(stockTicker)) {
+                stock.trimDailyClosePrices(startDateStr, endDateStr);
                 return Response.ok().entity(stock).build();
             }
         }

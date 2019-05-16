@@ -16,14 +16,12 @@
 
 package pojo;
 
-import com.fasterxml.jackson.annotation.JsonAnyGetter;
-import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonProperty;
-import com.fasterxml.jackson.annotation.JsonCreator;
 
-import java.util.Date;
+import java.text.ParseException;
 import java.util.List;
-import java.util.Map;
+import java.util.TreeMap;
+import java.util.SortedMap;
 import java.text.SimpleDateFormat;
 
 /**
@@ -32,7 +30,8 @@ import java.text.SimpleDateFormat;
  */
 public class Stock {
 
-    public static final SimpleDateFormat DATEFORMAT = new SimpleDateFormat("MM-dd-yyyy");
+    public static final SimpleDateFormat INPUTDATEFORMAT = new SimpleDateFormat("MM-dd-yyyy");
+    public static final SimpleDateFormat OUTPUTDATEFORMAT = new SimpleDateFormat("M/d/yyyy");
 
     // TODO - Think back to your modelling session
     // Define the attributes of a stock price based on the
@@ -41,7 +40,7 @@ public class Stock {
     private String name;
 
     @JsonProperty
-    private List<Map<String,Float>> dailyClosePrice;
+    private List<TreeMap<String,Float>> dailyClosePrice;
 
     // TODO - add getter and setter methods for your attributes
     public String getName() {
@@ -52,11 +51,25 @@ public class Stock {
         this.name = name;
     }
 
-    public List<Map<String,Float>> getDailyClosePrice() {
+    public List<TreeMap<String,Float>> getDailyClosePrice() {
         return dailyClosePrice;
     }
 
-    public void setDailyClosePrice(List<Map<String,Float>> dailyClosePrice) { this.dailyClosePrice = dailyClosePrice; }
+    public void setDailyClosePrice(List<TreeMap<String,Float>> dailyClosePrice) { this.dailyClosePrice = dailyClosePrice; }
+
+    public void trimDailyClosePrices(String startDateStr, String endDateStr) throws ParseException {
+        String newStartDateStr = OUTPUTDATEFORMAT.format(INPUTDATEFORMAT.parse(startDateStr));
+        String newEndDateStr = OUTPUTDATEFORMAT.format(INPUTDATEFORMAT.parse(endDateStr));
+
+        System.out.println("startDateStr:" + startDateStr);
+        System.out.println("endDateStr:" + endDateStr);
+        System.out.println("newStartDateStr:" + newStartDateStr);
+        System.out.println("newEndDateStr:" + newEndDateStr);
+
+        SortedMap<String,Float> newDailyClosePrice = this.dailyClosePrice.get(0).subMap(newStartDateStr, newEndDateStr);
+        this.dailyClosePrice.set(0, new TreeMap<>(newDailyClosePrice));
+        return;
+    }
 
     @Override
     public boolean equals(Object o) {
