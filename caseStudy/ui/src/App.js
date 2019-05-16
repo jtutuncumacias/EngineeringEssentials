@@ -22,9 +22,10 @@ import './style/App.css';
  * Import your components
  */
 
- import Charts from './components/Charts'
- import Date from './components/Date'
- import StockTicker from './components/StockTicker'
+ import Charts from './components/Charts';
+ import Date from './components/Date';
+ import StockTicker from './components/StockTicker';
+ import LineChart from './components/charts/LineChart';
 
 
 class App extends React.Component{
@@ -35,19 +36,21 @@ class App extends React.Component{
              * TODO
              * Add state objects for the user inputs and anything else you may need to render the highchart.
              */
-             stockTicker: null,
-             startDate: null,
-             endDate: null
+             stockTicker: 'ATVI',
+             startDate: '3/15/2019',
+             endDate: '3/20/2019'
         };
 
     }
 
-
-
-
+    // handleSubmit = (stockTicker, startDate, endDate) => {
+    //   const newCard = {author, text: message, tags, dateStamp};
+    //   const cards = [...this.state.cards, newCard];
+    //   this.setState({cards: cards});
+    // }
 
     render () {
-      return (
+      return ( 
           <div className="page-display">
               <div className="input">
               {/**
@@ -58,7 +61,11 @@ class App extends React.Component{
                * These props methods should set state and help determine if the
                * highchart should be displayed by changing the state of that boolean.
                * Don't forget to bind these methods!
-               */}
+               */
+
+              ((this.state.stockTicker != null) && (this.state.startDate != null) && (this.state.endDate != null)) ? 
+              <LineChart stockTicker={this.state.stockTicker} startDate={this.state.startDate} endDate={this.state.endDate}/> : null
+              }
 
                 <div className="date-range">
 
@@ -74,14 +81,13 @@ class App extends React.Component{
                    *  be maintained as a state object.
                    *  http://reactpatterns.com/#conditional-rendering
                    */
-                   ((this.state.stockTicker != null) && (this.state.startDate != null) && (this.state.endDate != null)) ? 
-                   <Chart stockTicker={this.state.stockTicker} startDate={this.state.startDate} endDate={this.state.endDate}/> : null
+
+
                  }
 
 
           </div>
       );
     }
-}
-
+  }
 export default App;

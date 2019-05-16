@@ -44,7 +44,7 @@ class LineChart extends React.Component {
          * required by the type of line chart chosen and set it in the series. Use Date.UTC(..)
          * to create the x-axis.
          */
-         seriesData = this.props.data;
+         const seriesData = this.props.data;
          console.log(seriesData);
         
         /**
@@ -66,5 +66,7 @@ class LineChart extends React.Component {
         )
     }
 }
+
+export default LineChart;
 
 // Don't forget to export your component!

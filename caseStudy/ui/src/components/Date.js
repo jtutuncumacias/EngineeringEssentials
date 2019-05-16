@@ -77,4 +77,6 @@ class Date extends React.Component {
 
 }
 
+export default Date;
+
 // Don't forget to export your component!

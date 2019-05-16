@@ -76,7 +76,7 @@ class Charts extends React.Component {
          *  Don't forget to bind the helper method in the constructor!
          * */
 
-         fetch("http://localhost:3000/stock/" + {this.props.} + "/" + {} + "/" + {})
+         fetch("http://localhost:3000/stock/" + this.props.stockTicker + "/startDate/" + this.props.startDate + "/endDate/" + this.props.endDate)
           .then(response => response.json())
           .then(data => {
             this.setState({ data: data });
@@ -95,5 +95,7 @@ class Charts extends React.Component {
         );
     }
 }
+
+export default Charts;
 
 // Don't forget to export your component!

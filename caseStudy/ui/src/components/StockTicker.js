@@ -160,4 +160,6 @@ class StockTicker extends React.Component {
 
 }
 
+export default StockTicker;
+
 //Don't forget to export your component!
