@@ -23,9 +23,8 @@ import './style/App.css';
  */
 
  import Charts from './components/Charts';
- import Date from './components/Date';
- import StockTicker from './components/StockTicker';
- import LineChart from './components/charts/LineChart';
+// import StockTicker from './components/StockTicker';
+// import LineChart from './components/charts/LineChart';
 
 
 class App extends React.Component{
@@ -36,9 +35,9 @@ class App extends React.Component{
              * TODO
              * Add state objects for the user inputs and anything else you may need to render the highchart.
              */
-             stockTicker: 'ATVI',
-             startDate: '3/15/2019',
-             endDate: '3/20/2019'
+             stockTicker: 'GOOG',
+             startDate: '2-26-2019',
+             endDate: '3-6-2019'
         };
 
     }
@@ -64,7 +63,11 @@ class App extends React.Component{
                */
 
               ((this.state.stockTicker != null) && (this.state.startDate != null) && (this.state.endDate != null)) ? 
-              <LineChart stockTicker={this.state.stockTicker} startDate={this.state.startDate} endDate={this.state.endDate}/> : null
+                <Charts 
+                    stockTicker={this.state.stockTicker}
+                    startDate={this.state.startDate} 
+                    endDate={this.state.endDate}
+                /> : null
               }
 
                 <div className="date-range">

@@ -16,23 +16,28 @@
 
 import React from 'react';
 import LineChart from './charts/LineChart';
+import axios from 'axios';
 
 class Charts extends React.Component {
     constructor(props) {
         super(props);
+        //this.dataSourceHelper = this.dataSourceHelper.bind(this);
         this.state = {
             /**
              * TODO
              * Initialize a state object to store a JavaScript object returned from the helper method.
              * It can be initialized to be empty.
              */
-             data: null,
         };
     }
 
 
     componentWillMount(nextProps) {
         console.log("Calling helper method to fetch data from service.");
+        this.dataSourceHelper(nextProps);
+    }
+
+    componentWillReceiveProps(nextProps){
         this.dataSourceHelper(nextProps);
     }
 
@@ -75,13 +80,30 @@ class Charts extends React.Component {
          *
          *  Don't forget to bind the helper method in the constructor!
          * */
+        axios.get("http://localhost:8080/stock/" + this.props.stockTicker + "/startDate/" + this.props.startDate + "/endDate/" + this.props.endDate)
+        .then((response) => {
+            // handle success
+            this.setState({data:response.data})
+        })
+        .catch( (error) => {
+            console.log(error)
+        })
+         /*
 
-         fetch("http://localhost:3000/stock/" + this.props.stockTicker + "/startDate/" + this.props.startDate + "/endDate/" + this.props.endDate)
-          .then(response => response.json())
+         fetch("http://localhost:8080/stock/" + this.props.stockTicker + "/startDate/" + this.props.startDate + "/endDate/" + this.props.endDate, {
+            "Content-Type": "application/json",
+            Accept: "application/json"})
+          .then(response => {
+            return response.json();
+          })
           .then(data => {
+            console.log(data)
             this.setState({ data: data });
           });
-}
+          */
+        }
+
+    shouldComponentUpdate () { return true; }
     
     render() {
         /**
